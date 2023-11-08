@@ -1,0 +1,42 @@
+version: "3.9"  
+  
+services:  
+  app:  
+    build:  
+      context: ./  
+      dockerfile: Dockerfile  
+    hostname: app  
+    container_name: app  
+    depends_on:  
+      - postgres
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:  
+      - ./:/home/app  
+    networks:  
+      - net  
+  
+  postgres:  
+    image: postgres:15.4-alpine  
+    hostname: postgres  
+    container_name: postgres  
+    restart: on-failure  
+    environment:  
+      - POSTGRES_USER=postgres  
+      - POSTGRES_PASSWORD=postgres  
+    ports:  
+      - "5432:5432"  
+    volumes:  
+      - postgres:/var/lib/postgresql/data  
+    networks:  
+      - net  
+  
+volumes:  
+  postgres:  
+    driver: local  
+  
+networks:  
+  net:  
+    external: true

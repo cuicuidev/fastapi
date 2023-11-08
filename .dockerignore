@@ -8,3 +8,6 @@ __pycache__/
 
 .git
 .gitignore
+
+.docker-compose.yml
+.dockerignore
